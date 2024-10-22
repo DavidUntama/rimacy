@@ -1,0 +1,10 @@
+<div>
+    <form [formGroup]="frmTipo">
+        <label for="nomnbre" class="form-label">Nombre</label>
+        <input id="nomnbre" type="text" class="form-control" formControlName="nombre" autofocus>
+        <input type="hidden" formControlName="id">
+        <hr>
+        <button class="btn btn-primary" type="button" (click)="onClickSave()">Guardar</button>
+        <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal">Cancelar</button>
+    </form>
+</div>

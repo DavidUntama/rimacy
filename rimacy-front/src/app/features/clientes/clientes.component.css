@@ -1,0 +1,8 @@
+a{
+    cursor: pointer;
+}
+options{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,48 @@
+<form [formGroup]="frmColaborador"   class="row g-3">
+    <div class="col-md-6">
+        <label for="nombres" class="form-label">Nombres</label>
+        <input type="text" class="form-control" id="nombres" formControlName="nombres" maxlength="25">
+    </div>
+
+    <div class="col-md-6">
+        <label for="apellidos" class="form-label">Apellidos</label>
+        <input type="text" class="form-control" id="apellidos" formControlName="apellidos" maxlength="25">
+    </div>
+
+    <div class="col-md-12">
+        <label for="direccion" class="form-label">Direccion</label>
+        <input type="text" class="form-control" id="direccion" formControlName="direccion" maxlength="50">
+    </div>
+
+    <div class="col-md-12">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" formControlName="email" maxlength="40">
+    </div>
+    <div class="col-md-6">
+        <label for="telefono" class="form-label">Telefono</label>
+        <input type="text" class="form-control" id="telefono" formControlName="telefono" maxlength="12">
+    </div>
+
+
+    <div class="col-md-6">
+        <label for="ruc" class="form-label">RUC</label>
+        <input type="text" class="form-control" id="ruc" formControlName="ruc" maxlength="12">
+    </div>
+
+    <div class="col-md-6">
+        <label for="puesto" class="form-label">Puesto</label>
+        <input type="text" class="form-control" id="puesto" formControlName="puesto" maxlength="25">
+    </div>
+
+    <div class="col-md-6">
+        <label for="sueldo" class="form-label">Sueldo</label>
+        <input type="number" class="form-control" id="sueldo" formControlName="sueldo" step="0.01">
+    </div>
+
+    <div class="col-12">
+        <button class="btn btn-primary" type="button" (click)="onClickSave()">Guardar</button>
+        <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal">Cancelar</button>
+    </div>
+    <!-- <pre>{{ frmColaborador.value | json }}</pre>
+    <pre>{{ colaborador | json }}</pre> -->
+</form>

@@ -1,0 +1,40 @@
+<button type="button" class="btn btn-primary" (click)="openModal(-1)">
+  Nuevo
+</button>
+<hr>
+<div class="contenedor">
+  @for (item of productos; track $index) {
+
+  <div class="card border-secondary mb-3" style="max-width: 18rem;">
+    <div class="card-header">{{ item.marca }}</div>
+    <img src="{{ item.foto }}" class="card-img-top" alt="{{item.marca}}">
+    <div class="card-body text-secondary">
+      <h5 class="card-title"> {{ item.denominacion }} </h5>
+      <p class="card-text"> {{ item.descripcion }} </p>
+    </div>
+    <div class="card-footer">
+      <button class="btn btn-primary"(click)="openModal($index)">Modificar</button>
+      <button class="btn btn-danger ms-2">Desactivar</button>
+    </div>
+  </div>
+
+  }
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="modalProducto" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">Producto ({{idx>-1?"Editando...":"Agregando..."}})</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+      </div>
+      <div class="modal-body">
+        <app-productos-form (closeModal)="closeModal($event)" [objProducto]="producto" />
+      </div>
+     
+    </div>
+  </div>
+</div>

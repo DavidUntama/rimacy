@@ -1,0 +1,39 @@
+{
+  "src": {
+    "main": {
+      "java": {
+        "com": {
+          "rimacy": {
+            "clientes": {
+              "controller": {
+                "ClienteController.java": "package com.rimacy.clientes.controller;\r\n\r\nimport com.rimacy.clientes.models.Cliente;\r\nimport com.rimacy.clientes.services.ClienteService;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.http.ResponseEntity;\r\nimport org.springframework.web.bind.annotation.*;\r\n\r\nimport java.util.List;\r\n\r\n@RestController\r\n@RequestMapping(\"/clientes\")\r\n@CrossOrigin\r\npublic class ClienteController {\r\n\r\n    @Autowired\r\n    private ClienteService clienteService;\r\n\r\n    @GetMapping\r\n    public List<Cliente> getAllClientes(){\r\n        return clienteService.getAllClientes();\r\n    }\r\n  /*  @GetMapping(\"/pedidos\")\r\n    public List<Cliente> getAllClientesWithPedidos(){\r\n        return clienteService.getAllClientesWithPedidos();\r\n    }\r\n*/\r\n    @GetMapping(\"/{id}\")\r\n    public ResponseEntity<Cliente> getClienteById(@PathVariable Long id){\r\n        return ResponseEntity.ok(clienteService.getClienteById(id));\r\n    }\r\n\r\n    /*@PostMapping\r\n    public Cliente saveCliente(@RequestBody Cliente cliente){\r\n        return clienteService.saveCliente(cliente);\r\n    }*/\r\n\r\n    @DeleteMapping(\"/{id}\")\r\n    public int deleteCliente(@PathVariable Long id){\r\n        try{\r\n            clienteService.delCliente(id);\r\n            return 1;\r\n        }catch (Exception e){\r\n            return 0;\r\n        }\r\n    }\r\n\r\n\r\n}"
+              },
+              "models": {
+                "Cliente.java": "package com.rimacy.clientes.models;\r\n\r\nimport com.fasterxml.jackson.annotation.JsonIgnore;\r\nimport com.fasterxml.jackson.annotation.JsonManagedReference;\r\nimport com.rimacy.models.Persona;\r\nimport com.rimacy.pedidos.models.Pedido;\r\nimport jakarta.persistence.*;\r\nimport lombok.Data;\r\nimport lombok.EqualsAndHashCode;\r\nimport org.hibernate.annotations.DynamicUpdate;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\n\r\n@Entity\r\n@DynamicUpdate\r\n@EqualsAndHashCode(callSuper=true)\r\n@Data\r\n@Table(name = \"clientes\")\r\npublic class Cliente extends Persona {\r\n    @Column(length = 40)\r\n    private String ruta;\r\n\r\n    @OneToMany(mappedBy = \"cliente\", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)\r\n    private List<Pedido> pedidos = new ArrayList<>();\r\n}\r\n"
+              },
+              "repositories": {
+                "ClienteRepository.java": "package com.rimacy.clientes.repositories;\r\n\r\nimport com.rimacy.clientes.models.Cliente;\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\nimport org.springframework.data.jpa.repository.Query;\r\nimport org.springframework.stereotype.Repository;\r\n\r\nimport java.util.List;\r\n\r\n@Repository\r\npublic interface ClienteRepository extends JpaRepository<Cliente, Long> {\r\n /*   @Query(\"SELECT c FROM Cliente c LEFT JOIN FETCH c.pedidos\")\r\n    List<Cliente> findAllWithPedidos();*/\r\n\r\n}\r\n"
+              },
+              "services": {
+                "ClienteService.java": "package com.rimacy.clientes.services;\r\n\r\nimport com.rimacy.clientes.models.Cliente;\r\n\r\nimport java.util.List;\r\n\r\npublic interface ClienteService {\r\n    public List<Cliente> getAllClientes();\r\n   // public List<Cliente> getAllClientesWithPedidos();\r\n    //public Cliente saveCliente(Cliente cliente);\r\n    public Cliente getClienteById(Long id);\r\n    public void delCliente(Long id);\r\n}\r\n",
+                "ClienteServiceImp.java": "package com.rimacy.clientes.services;\r\n\r\nimport com.rimacy.clientes.models.Cliente;\r\nimport com.rimacy.clientes.repositories.ClienteRepository;\r\nimport jakarta.persistence.EntityNotFoundException;\r\nimport org.springframework.beans.factory.annotation.Autowired;\r\nimport org.springframework.stereotype.Service;\r\n\r\nimport java.util.ArrayList;\r\nimport java.util.List;\r\nimport java.util.Optional;\r\n\r\n@Service\r\npublic class ClienteServiceImp implements ClienteService{\r\n    @Autowired\r\n    private ClienteRepository clienteRepository;\r\n/*\r\n    @Override\r\n    public List<Cliente> getAllClientesWithPedidos() {\r\n        return clienteRepository.findAllWithPedidos();\r\n    }\r\n*/\r\n    public List<Cliente> getAllClientes(){\r\n\r\n        return clienteRepository.findAll();\r\n    }\r\n/*\r\n    public Cliente saveCliente(Cliente cliente){\r\n        //cliente es nuevo\r\n        System.out.println(cliente.getId());\r\n        if( cliente.getId() == null || ! clienteRepository.existsById(cliente.getId()) )\r\n        {\r\n            if (cliente.getPedidos() == null) {\r\n                cliente.setPedidos(new ArrayList<>());\r\n            }\r\n        } else {  // el cliente existe, estamos modificando\r\n            Cliente clienteExistente = clienteRepository.findById(cliente.getId()).orElseThrow(() -> new EntityNotFoundException(\"Cliente no encontrado\"));\r\n\r\n            cliente.setPedidos(clienteExistente.getPedidos());\r\n        }\r\n        return clienteRepository.save(cliente);\r\n    }\r\n*/\r\n    @Override\r\n    public Cliente getClienteById(Long id) {\r\n        Optional<Cliente> cliente = clienteRepository.findById(id);\r\n        return cliente.orElse(null);\r\n    }\r\n\r\n    @Override\r\n    public void delCliente(Long id) {\r\n        clienteRepository.deleteById( id);\r\n    }\r\n\r\n\r\n}\r\n"
+              }
+            },
+            "pedido_det": {
+              "models": {
+                "PedidoDet.java": "package com.rimacy.pedido_det.models;\r\n\r\nimport com.rimacy.pedidos.models.Pedido;\r\nimport jakarta.persistence.*;\r\nimport lombok.Data;\r\n\r\nimport java.math.BigDecimal;\r\n\r\n@Entity\r\n@Data\r\n@Table(name = \"pedidos_det\")\r\npublic class PedidoDet {\r\n    @Id\r\n    @GeneratedValue(strategy = GenerationType.IDENTITY)\r\n    private long id;\r\n\r\n    @ManyToOne\r\n    @JoinColumn(name = \"idPedido\")\r\n    private Pedido pedido;\r\n\r\n    private int idProducto;\r\n    private int idUnidad;\r\n\r\n    private int cantidad;\r\n    @Column(precision = 6, scale = 2)\r\n    private BigDecimal costo;\r\n}\r\n"
+              },
+              "repositories": {
+                "PedidoDetRepository.java": "package com.rimacy.pedido_det.repositories;\r\n\r\nimport com.rimacy.pedido_det.models.PedidoDet;\r\nimport org.springframework.data.jpa.repository.JpaRepository;\r\n\r\npublic interface PedidoDetRepository extends JpaRepository<PedidoDet, Long> {\r\n}\r\n"
+              },
+              "services": {
+                "PedidoDetService.java": "package com.rimacy.pedido_det.services;\r\n\r\npublic interface PedidoDetService {\r\n}\r\n",
+                "PedidoDetServiceImp.java": "package com.rimacy.pedido_det.services;\r\n\r\npublic class PedidoDetServiceImp {\r\n\r\n}\r\n"
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

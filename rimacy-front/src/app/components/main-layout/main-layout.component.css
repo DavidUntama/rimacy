@@ -1,0 +1,21 @@
+div{
+    border: 1px solid black;
+}
+#main{
+    min-height: 95vh;    
+    display: flex;
+    flex-direction: column;
+}
+
+#content{
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+}
+
+#sidebar{
+    min-width: fit-content;
+}
+#main-content{
+    flex: 1;    
+}

@@ -1,0 +1,50 @@
+<div>
+  <h2>{{ titulo }}</h2>
+  <hr>
+  <div>
+    <button type="button" class="btn btn-primary" (click)="openModal(-1)">Nuevo</button>    
+  </div>
+
+  <hr>
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Dirección</th>
+        <th>Teléfono</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for(cliente of clientes; track $index){
+      <tr>
+        <td>{{ cliente.id }}</td>
+        <td>{{ cliente.nombres }}</td>
+        <td>{{ cliente.direccion }}</td>
+        <td>{{ cliente.telefono }}</td>
+        <td>
+          <a class="btn-sm btn-warning circle" (click)="openModal($index)"> <i class="bi bi-pencil-square"></i>
+          </a> &nbsp;
+          <a class="btn-sm btn-danger circle" (click)="delete($index)" > <i class="bi bi-x-circle"></i> </a> &nbsp;
+        </td>
+      </tr>
+      }
+  </table>
+</div>
+
+<div class="modal fade" id="clienteModal" tabindex="-1" aria-labelledby="clienteModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="clienteModalLabel">Agregar/Editar Cliente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <!-- <app-clientes-form [frmClienteIn]="frmCliente" (frmClienteOut)="onSaveChanges($event)"
+          (closeModal)="onCloseModal()" /> -->
+          <app-clientes-form [clienteObj]="cliente" (closeModal)="closeModal($event)"/>
+      </div>
+    </div>
+  </div>
+</div>
