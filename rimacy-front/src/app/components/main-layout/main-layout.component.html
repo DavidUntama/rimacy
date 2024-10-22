@@ -1,0 +1,22 @@
+<div class="container mt-3" id="main">
+    <div class="row" id="header">
+        <div class="col-12">
+            <app-header></app-header>
+        </div>
+    </div>
+
+    <div class="row" id="content">
+        <div class="col-2" id="sidebar" >
+            <app-sidebar/>
+        </div>
+        <div class="col-10 bg-light rounded p-3" id="main-content">
+            <router-outlet/>
+        </div>
+    </div>
+
+    <div class="row" id="footer">
+        <div class="col-12 text-center ">
+            <app-footer></app-footer>
+        </div>
+    </div>
+</div>

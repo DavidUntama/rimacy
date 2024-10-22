@@ -1,0 +1,53 @@
+<form [formGroup]="frmCliente" class="row g-3">
+
+  <div class="col-md-6">
+    <label for="nombres" class="form-label">Nombres</label>
+    <input type="text" class="form-control" id="nombres" maxlength="25" formControlName="nombres">
+  </div>
+
+  <div class="col-md-6">
+    <label for="apellidos" class="form-label">Apellidos</label>
+    <input type="text" class="form-control" id="apellidos" maxlength="25" formControlName="apellidos">
+  </div>
+
+  <div class="col-md-12">
+    <label for="direccion" class="form-label">Dirección</label>
+    <input type="text" class="form-control" id="direccion" maxlength="50" formControlName="direccion">
+  </div>
+
+  <div class="col-md-12">
+    <label for="telefono" class="form-label">Teléfono</label>
+    <input type="text" class="form-control" id="telefono" maxlength="12" formControlName="telefono">
+  </div>
+
+  <div class="col-md-6">
+    <label for="email" class="form-label">Email</label>
+    <input type="email" class="form-control" id="email" maxlength="40" formControlName="email">
+  </div>
+
+  <div class="col-md-6">
+    <label for="ruc" class="form-label">RUC</label>
+    <input type="text" class="form-control" id="ruc" maxlength="12" formControlName="ruc">
+  </div>
+
+  <div class="col-md-6">
+    <label for="ruta" class="form-label">Ruta</label>
+    <input type="text" class="form-control" id="ruta" maxlength="40" formControlName="ruta">
+  </div>
+
+  <div class="col-md-6">
+    <label for="tipo" class="form-label">Tipo</label>
+    <select id="tipo" class="form-select" formControlName="clienteTipo" [compareWith]="compareClienteTipo" >
+      @for(item of tipos; track $index ){
+      <option id="item" [ngValue]="item">{{item.nombre}}</option>
+      }
+    </select>
+  </div>
+
+  <div class="col-12">
+    <button class="btn btn-primary" type="button" (click)="onClickSave()">Guardar</button>
+    <button type="button" class="btn btn-danger ms-2" data-bs-dismiss="modal">Cancelar</button>
+  </div>
+</form>
+{{frmCliente.value|json}} <br>
+ {{frmCliente.valid}}

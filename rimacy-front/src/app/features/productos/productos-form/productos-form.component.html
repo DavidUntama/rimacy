@@ -1,0 +1,56 @@
+<div>
+    <form [formGroup]="frmProducto">
+        <label for="denominacion" class="form-label">Denominación
+            <input class="form-control" type="text" id="denominacion" formControlName="denominacion"> </label>
+
+        <label for="marca" class="form-label ms-3">Marca
+            <input class="form-control" type="text" id="marca" formControlName="marca"> </label>
+
+        <label for="envase" class="form-label">Presentacion
+            <input class="form-control" type="text" id="envase" formControlName="presentacion"> </label>
+
+        <label for="orden" class="form-label ms-3">Orden
+            <input class="form-control" type="number" id="orden" formControlName="orden"></label>
+
+        <label for="descripcion" class="form-label">Descripción</label>
+        <textarea class="form-control" id="descripcion" rows="3" formControlName="descripcion"></textarea>
+
+        <label for="orden" class="form-label ms-3">Imagen
+            <input class="form-control" type="text" id="orden" formControlName="foto"></label>
+
+        <label for="unidad" class="form-label ms-3">Unidad base
+            <select id="tipo" class="form-select" formControlName="unidadBase" [compareWith]="compareClienteTipo">
+                @for(item of unidadesBase; track $index ){
+                <option id="item" [ngValue]="item">{{item.nombre}}</option>
+                }
+            </select>
+        </label>
+
+        <div class="form-check form-check-inline ms-3">
+            <input class="form-check-input" type="checkbox" value="" id="activo" formControlName="activo">
+            <label class="form-check-label" for="activo">
+                Activo
+            </label>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-primary" (click)="onSaveClick()">Guardar</button>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+
+    </form>
+    <!-- {{ frmProducto.value|json }} -->
+</div>
+<!-- export interface Producto {
+    id:           number;
+    denominacion: null;
+    marca:        string;
+    tipo:         null;
+    presentacion: string;
+    precio:       number;
+    stock:        number;
+    foto:         string;
+    descripcion:  string;
+    activo:       boolean;
+    orden:        number;
+    unidadBase:   Unidad;
+} -->
