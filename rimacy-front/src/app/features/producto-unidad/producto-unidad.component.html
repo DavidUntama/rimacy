@@ -1,5 +1,42 @@
-<form>
-  <select id="producto" class="form-select">
-    <option>Seleccione producto</option>
-  </select>
-</form>
+<div class="row">
+  <form class="col-6">
+    <select
+      id="producto"
+      class="form-select mb-3"
+      #prod
+      (change)="getUnits(prod.value)"
+    >
+      <option value="0">Seleccione producto</option>
+      @for (prod of productos; track $index) {
+      <option [value]="prod.id">{{ prod.denominacion }}</option>
+      }
+    </select>
+    <select id="unidad" class="form-select mb-3">
+      <option>Seleccione unidad</option>
+      @for (unid of unidades; track $index) {
+      <option [ngValue]="unid">{{ unid.nombre }}</option>
+      }
+    </select>
+    <button class="btn btn-success mb-3" (click)="add($event)">Agregar</button>
+  </form>
+  <hr />
+
+  <table class="table" *ngIf="unidsOfIdProd.length">
+    <thead>
+      <tr>
+        <th>Unidad</th>
+        <th>Cantidad</th>
+        <th>Accion</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (u of unidsOfIdProd; track $index) {
+      <tr> 
+        <td> {{u.unidad.nombre}} </td>
+        <td> {{u.unidad.cantidad}} </td>
+        <td> <a class="btn-sm btn-danger circle"> <i class="bi bi-x-circle"></i> </a>  </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>

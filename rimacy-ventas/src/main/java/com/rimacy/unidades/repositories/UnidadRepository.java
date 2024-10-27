@@ -10,4 +10,7 @@ public interface UnidadRepository extends JpaRepository<Unidad, Integer> {
     List<Unidad> findAllByOrderByIdAsc();
     @Query("select u from Unidad u where u.cantidad=1")
     List<Unidad> findAllUnidadesBase();
+
+    @Query("select u from Unidad u where u.cantidad>1")
+    List<Unidad> findAllNonUnidadesBase();
 }

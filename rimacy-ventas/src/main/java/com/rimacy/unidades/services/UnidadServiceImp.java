@@ -23,6 +23,11 @@ public class UnidadServiceImp implements UnidadService{
     }
 
     @Override
+    public List<Unidad> getAllNonUnidadesBase() {
+        return unidadRepository.findAllNonUnidadesBase();
+    }
+
+    @Override
     public Unidad getUnidadById(int id) {
         return unidadRepository.findById(id).orElse(null);
     }

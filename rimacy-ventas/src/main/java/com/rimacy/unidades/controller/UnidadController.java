@@ -18,6 +18,8 @@ public class UnidadController {
     public List<Unidad> getAllUnidades(){
         return unidadService.getAllUnidades();
     }
+    @GetMapping("/allNonBase")
+    public  List<Unidad> getAllUnidadesNonBase() { return unidadService.getAllNonUnidadesBase(); }
     @GetMapping("/base")
     public List<Unidad> getAllUnidadesBase(){
         return unidadService.getAllUnidadesBase();

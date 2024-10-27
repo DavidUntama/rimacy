@@ -1,4 +1,4 @@
-import { CommonModule, JsonPipe } from '@angular/common';
+import { JsonPipe } from '@angular/common';
 import {
   Component,
   EventEmitter,
@@ -7,13 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import {
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ClientesService } from '../../../services/clientes.service';
 import { Cliente } from '../../../models/cliente';
 import { ClienteTipoService } from '../../../services/cliente-tipo.service';
@@ -34,7 +28,7 @@ export class ClientesFormComponent {
 
   public frmCliente = this.fb.group({
     id: [0],
-    nombres: ['',Validators.required],
+    nombres: ['', Validators.required],
     apellidos: [''],
     direccion: [''],
     telefono: [''],
@@ -65,7 +59,7 @@ export class ClientesFormComponent {
       this.srvCliente.save(this.frmCliente.value as Cliente).subscribe({
         next: (d) => this.closeModal.emit(d),
         error: (e) => alert(e),
-      })
+      });
     }
   }
 

@@ -17,6 +17,10 @@ export class UnidadesService {
     return this.http.get<Array<Unidad>>(`${this.url}/base`);
   }
 
+  public getUnidadesNoBase(): Observable<Array<Unidad>> {
+    return this.http.get<Array<Unidad>>(`${this.url}/allNonBase`);
+  }
+
   public getUnidad(id: number): Observable<Unidad> {
     return this.http.get<Unidad>(`${this.url}/${id}`);
   }

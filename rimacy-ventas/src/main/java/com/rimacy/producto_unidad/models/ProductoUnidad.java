@@ -21,6 +21,7 @@ public class ProductoUnidad {
     @JoinColumn(name = "id_unidad", nullable = false)
     private Unidad unidad;
 
-    private boolean minima;
+    /*private boolean minima;
     private int stock;
+    */
 }
