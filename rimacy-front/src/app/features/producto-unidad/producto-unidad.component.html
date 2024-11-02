@@ -1,22 +1,24 @@
 <div class="row">
-  <form class="col-6">
+  <form [formGroup]="frm" class="col-6">
     <select
       id="producto"
       class="form-select mb-3"
-      #prod
-      (change)="getUnits(prod.value)"
+      (change)="getUnits()"
+      formControlName="producto"
     >
-      <option value="0">Seleccione producto</option>
+      <option [ngValue]="null">Seleccione producto</option>
       @for (prod of productos; track $index) {
-      <option [value]="prod.id">{{ prod.denominacion }}</option>
+      <option [ngValue]="prod">{{ prod.denominacion }}</option>
       }
     </select>
-    <select id="unidad" class="form-select mb-3">
-      <option>Seleccione unidad</option>
+
+    <select id="unidad" class="form-select mb-3" formControlName="unidad">
+      <option [ngValue]="null">Seleccione unidad</option>
       @for (unid of unidades; track $index) {
       <option [ngValue]="unid">{{ unid.nombre }}</option>
       }
     </select>
+
     <button class="btn btn-success mb-3" (click)="add($event)">Agregar</button>
   </form>
   <hr />
@@ -31,10 +33,14 @@
     </thead>
     <tbody>
       @for (u of unidsOfIdProd; track $index) {
-      <tr> 
-        <td> {{u.unidad.nombre}} </td>
-        <td> {{u.unidad.cantidad}} </td>
-        <td> <a class="btn-sm btn-danger circle"> <i class="bi bi-x-circle"></i> </a>  </td>
+      <tr>
+        <td>{{ u.unidad.nombre }}</td>
+        <td>{{ u.unidad.cantidad }}</td>
+        <td>
+          <a class="btn-sm btn-danger circle" (click)="remove($index)">
+            <i class="bi bi-x-circle"></i>
+          </a>
+        </td>
       </tr>
       }
     </tbody>

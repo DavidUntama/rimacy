@@ -20,7 +20,11 @@ public class ProductoUnidadController {
     }
 
     @PostMapping
-    public void save(@RequestBody ProductoUnidad pu){
-        productoUnidadService.save(pu);
+    public int save(@RequestBody ProductoUnidad pu){
+        return  productoUnidadService.save(pu);
+    }
+    @DeleteMapping("/{id}")
+    public void deleteById(@PathVariable Integer id){
+        productoUnidadService.deletePair(id);
     }
 }
