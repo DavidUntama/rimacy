@@ -12,7 +12,10 @@ export class ProductosUnidadesService {
   public getUnidadesByIdProducto(id: number): Observable<Array<ProductoUnidad>> {
     return this.http.get<Array<ProductoUnidad>>(`${this.url}/byProd/${id}`);
   }
-  public saveUnitByIdProd(pu: ProductoUnidad): Observable<void>{
-    return this.http.post<void>(`${this.url}`, pu);
+  public save(pu: ProductoUnidad): Observable<number>{
+    return this.http.post<number>(`${this.url}`, pu);
+  }
+  public deleteById(id: Number): Observable<void>{
+    return this.http.delete<void>(`${this.url}/${id}`)
   }
 }

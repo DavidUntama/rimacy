@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface ProductoUnidadService {
     public List<ProductoUnidad> getUnitsByProduct(int idProd);
-    public void save(ProductoUnidad productoUnidad);
+    public int save(ProductoUnidad productoUnidad);
+    void deletePair(Integer id);
 }
