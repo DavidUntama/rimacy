@@ -18,9 +18,8 @@ public class ProductoUnidadServiceImp  implements ProductoUnidadService{
 
     @Override
     public int  save(ProductoUnidad productoUnidad) {
-        productoUnidadRepository.save(productoUnidad);
-        return productoUnidad.getId();
-
+        ProductoUnidad pu = productoUnidadRepository.save(productoUnidad);
+        return pu.getId();
     }
 
     @Override
