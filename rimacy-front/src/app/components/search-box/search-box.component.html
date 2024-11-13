@@ -1,0 +1,20 @@
+<div class="autocomplete-container">
+  <input
+    type="text"
+    class="form-control"
+    [placeholder]="placeHolder"
+    (keyup)="keyListener(txtInputValue.value, $event)"
+    #txtInputValue
+    id="txtInput"
+    autocomplete="off"
+  />
+  <ul *ngIf="sugerencias.length > 0" class="autocomplete-suggestions">
+    <li
+      *ngFor="let sugerencia of sugerencias; let i = index"
+      (click)="selectSuggestion(i)"
+      [class.selected]="i === selectedIndex"
+    >
+      {{ sugerencia }}
+    </li>
+  </ul>
+</div>
