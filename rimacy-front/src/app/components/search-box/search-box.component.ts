@@ -1,7 +1,16 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  inject,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { debounceTime, Subject, map, switchMap } from 'rxjs';
 import { Settings } from '../../settings';
 import { CommonModule } from '@angular/common';
+import { ClientesService } from '../../services/clientes.service';
+import { Cliente } from '../../models/cliente';
 
 @Component({
   selector: 'search-box',
@@ -12,25 +21,19 @@ import { CommonModule } from '@angular/common';
 })
 export class SearchBoxComponent implements OnInit {
   private debouncer: Subject<string> = new Subject<string>();
+  private clientesSrv = inject(ClientesService);
 
-  public clientes: string[] = [
-    'Juan Pérez',
-    'María González',
-    'Carlos Ruiz',
-    'Ana López',
-    'David Sánchez',
-  ];
-  public sugerencias: string[] = [];
+  public sugerencias: Cliente[] = [];
 
   @Input()
   public placeHolder: string = '';
 
   @Output()
-  public onDebounce = new EventEmitter<string>();
+  public onDebounce = new EventEmitter<Cliente>();
 
   public selectedIndex: number = -1;
 
-  public keyListener(value: string, event: KeyboardEvent): void {
+  public onKeyPress(value: string, event: KeyboardEvent): void {
     const key = event.key;
     const ignoredKeys = [
       'Control',
@@ -53,6 +56,7 @@ export class SearchBoxComponent implements OnInit {
       }
     } else if (event.key === 'ArrowUp') {
       this.selectedIndex--;
+      if (this.selectedIndex < -1) this.selectedIndex = -1;
       this.updateInputWithSelected();
     } else if (event.key === 'Enter') {
       if (this.selectedIndex >= 0) this.selectSuggestion(this.selectedIndex);
@@ -68,32 +72,28 @@ export class SearchBoxComponent implements OnInit {
       const inputElement = document.getElementById(
         'txtInput'
       ) as HTMLInputElement;
-      inputElement.value = selectedSuggestion;
+     inputElement.value = selectedSuggestion.nombres +' '+ selectedSuggestion.apellidos;
     }
   }
 
   public selectSuggestion(idx: number): void {
     this.selectedIndex = idx;
     this.updateInputWithSelected();
-    this.onDebounce.emit(this.sugerencias[idx]);
+    this.onDebounce.emit(this.sugerencias[idx]); //emitir al padre el cliente
     this.sugerencias = [];
     this.selectedIndex = -1;
   }
 
   ngOnInit(): void {
     this.debouncer
-      .pipe(
-        debounceTime(300),
-        map((value) => value.toLowerCase()),
-        switchMap((value) => {
-          this.sugerencias = this.clientes.filter((cliente) =>
-            // cliente.toLowerCase().includes(value)
-            this.normalizeString(cliente).includes(this.normalizeString(value))
-          );
-          return this.sugerencias;
+      .pipe(debounceTime(Settings.DELAY_INPUT))
+      .subscribe((sugs) => {
+        if (sugs.length == 0) { this.sugerencias = [];  return};
+        this.clientesSrv.getSuggs(sugs).subscribe({
+          next: (v)=> this.sugerencias=v,
+          error: ()=>alert('Error en clientes suggests')
         })
-      )
-      .subscribe();
+      })
   }
 
   private normalizeString(str: string): string {

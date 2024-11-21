@@ -3,18 +3,19 @@
     type="text"
     class="form-control"
     [placeholder]="placeHolder"
-    (keyup)="keyListener(txtInputValue.value, $event)"
+    (keyup)="onKeyPress(txtInputValue.value, $event)"
     #txtInputValue
     id="txtInput"
     autocomplete="off"
   />
   <ul *ngIf="sugerencias.length > 0" class="autocomplete-suggestions">
+    @for (sugerencia of sugerencias; track $index) {
     <li
-      *ngFor="let sugerencia of sugerencias; let i = index"
-      (click)="selectSuggestion(i)"
-      [class.selected]="i === selectedIndex"
+      (click)="selectSuggestion($index)"
+      [class.selected]="$index == selectedIndex"
     >
-      {{ sugerencia }}
+      {{ sugerencia.nombres + " " + sugerencia.apellidos }}
     </li>
+    }
   </ul>
 </div>

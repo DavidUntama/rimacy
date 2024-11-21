@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { SearchBoxComponent } from '../../components/search-box/search-box.component';
+import { Cliente } from '../../models/cliente';
 
 @Component({
   selector: 'app-pedidos',
@@ -9,10 +10,10 @@ import { SearchBoxComponent } from '../../components/search-box/search-box.compo
   styleUrl: './pedidos.component.css',
 })
 export class PedidosComponent {
-  public strResult: string = '';
+  public cliResult!: Cliente;
 
-  public handleSearch(value: string): void{
-    this.strResult = value;
-    console.log(`cliente buscado: ${this.strResult}`)
+  public handleSearch(value: Cliente): void{
+    this.cliResult = value;
+    console.log(`cliente buscado: ${this.cliResult.nombres}`)
   }
 }

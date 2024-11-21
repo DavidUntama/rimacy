@@ -26,6 +26,10 @@ export class ClientesService {
     return this.http.get<Cliente>(`${this.url}/${id}`); 
   }
 
+  public getSuggs(s: string): Observable<Cliente[]> {
+    return this.http.get<Cliente[]>(`${this.url}/search/${s}`)
+  }
+
   public save(cliente: Cliente): Observable<Cliente> {
     return this.http.post<Cliente>(this.url, cliente);
   }
