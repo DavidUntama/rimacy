@@ -29,4 +29,7 @@ public class Cliente extends Persona {
     @ManyToOne
     @JoinColumn(name = "id_cliente_tipo", nullable = false)
     private ClienteTipo clienteTipo;
+
+    @Column(columnDefinition = "tsvector")
+    private String searchVector;
 }

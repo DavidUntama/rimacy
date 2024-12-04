@@ -1,6 +1,7 @@
 package com.rimacy.clientes.controller;
 
 import com.rimacy.clientes.models.Cliente;
+import com.rimacy.clientes.models.ClienteDTO;
 import com.rimacy.clientes.services.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -29,6 +30,13 @@ public class ClienteController {
     public ResponseEntity<Cliente> getClienteById(@PathVariable Long id){
         return ResponseEntity.ok(clienteService.getClienteById(id));
     }
+
+    @GetMapping("search/{s}")
+    public List<ClienteDTO> getSuggestion(@PathVariable String s){
+        return clienteService.findSuggestion(s);
+    }
+
+
 
     @PostMapping
     public Cliente saveCliente(@RequestBody Cliente cliente){

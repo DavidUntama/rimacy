@@ -11,6 +11,7 @@ import { Settings } from '../../settings';
 import { CommonModule } from '@angular/common';
 import { ClientesService } from '../../services/clientes.service';
 import { Cliente } from '../../models/cliente';
+import { ClienteDTO } from '../../models/clienteDTO';
 
 @Component({
   selector: 'search-box',
@@ -23,13 +24,13 @@ export class SearchBoxComponent implements OnInit {
   private debouncer: Subject<string> = new Subject<string>();
   private clientesSrv = inject(ClientesService);
 
-  public sugerencias: Cliente[] = [];
+  public sugerencias: ClienteDTO[] = [];
 
   @Input()
   public placeHolder: string = '';
 
   @Output()
-  public onDebounce = new EventEmitter<Cliente>();
+  public onDebounce = new EventEmitter<ClienteDTO>();
 
   public selectedIndex: number = -1;
 

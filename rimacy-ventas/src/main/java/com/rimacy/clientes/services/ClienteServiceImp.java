@@ -1,6 +1,8 @@
 package com.rimacy.clientes.services;
 
 import com.rimacy.clientes.models.Cliente;
+import com.rimacy.clientes.models.ClienteDTO;
+import com.rimacy.clientes.models.ClienteProjection;
 import com.rimacy.clientes.repositories.ClienteRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.Collections;
+import java.util.stream.Collectors;
 
 @Service
 public class ClienteServiceImp implements ClienteService{
@@ -19,6 +22,19 @@ public class ClienteServiceImp implements ClienteService{
     @Override
     public List<Cliente> getAllClientesWithPedidos() {
         return clienteRepository.findAll();
+    }
+
+    @Override
+    public List<ClienteDTO> findSuggestion(String s) {
+        List<ClienteProjection> projections = clienteRepository.searchClientes(s);
+        return projections.stream().map( projection -> {
+            ClienteDTO dto = new ClienteDTO();
+            dto.setId(projection.getId());
+            dto.setNombres(projection.getNombres());
+            dto.setApellidos(projection.getApellidos());
+            dto.setDireccion(projection.getDireccion());
+            return  dto;
+        }).collect(Collectors.toList());
     }
 
     public List<Cliente> getAllClientes(){

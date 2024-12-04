@@ -1,2 +1,188 @@
-cliente
-<search-box [placeHolder]="'Buscar cliente...'" (onDebounce)="handleSearch($event)"></search-box>
+<div class="container mt-4">
+  <!-- Navegación entre pestañas -->
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="tab" href="#buscar-pedido">
+        <i class="bi bi-search"></i> Buscar/Editar Pedido
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="tab" href="#nuevo-pedido">
+        <i class="bi bi-plus-circle"></i> Nuevo Pedido
+      </a>
+    </li>
+  </ul>
+
+  <div class="tab-content mt-3">
+    <!-- Pestaña de Buscar Pedido -->
+    <div id="buscar-pedido" class="tab-pane fade show active">
+      <div class="card">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+          <h5>Buscar Pedido</h5>
+          <button class="btn btn-light btn-sm" data-bs-toggle="tooltip" data-bs-placement="top" title="Buscar por número de guía">
+            <i class="bi bi-question-circle"></i>
+          </button>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Número de guía" (input)="onSearch($event)" />
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-primary w-100">Buscar</button>
+            </div>
+          </div>
+          <!-- Tabla de resultados -->
+          <table class="table mt-4">
+            <thead class="table-light">
+              <tr>
+                <th>N° Guía</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Importe</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody *ngIf="orders.length; else noOrders">
+              <tr *ngFor="let order of orders">
+                <td>{{ order.numeroGuia }}</td>
+                <td>{{ order.cliente }}</td>
+                <td>{{ order.fecha | date:'yyyy-MM-dd' }}</td>
+                <td>{{ order.importe | currency }}</td>
+                <td>
+                  <button class="btn btn-warning btn-sm" (click)="onEdit(order)">Editar</button>
+                  <button class="btn btn-danger btn-sm" (click)="onDelete(order)">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+            <ng-template #noOrders>
+              <tr>
+                <td colspan="5" class="text-center">No hay pedidos encontrados.</td>
+              </tr>
+            </ng-template>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pestaña de Nuevo Pedido -->
+    <div id="nuevo-pedido" class="tab-pane fade">
+      <div class="card">
+        <div class="card-header bg-secondary text-white">
+          <h5>Nuevo Pedido</h5>
+        </div>
+        <div class="card-body">
+          <form (ngSubmit)="onSubmit()">
+            <!-- Número de Guía -->
+            <div class="mb-3">
+              <label for="numeroGuia" class="form-label">Número de Guía</label>
+              <input 
+                type="text" 
+                id="numeroGuia" 
+                class="form-control" 
+                placeholder="Ingrese el número de guía" 
+                (input)="verificarNumeroGuia($event)"
+                required
+              />
+              <small class="text-danger" *ngIf="numeroGuiaDuplicado">
+                Advertencia: Este número de guía ya está registrado.
+              </small>
+            </div>
+
+            <!-- Cliente y Vendedor -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="cliente" class="form-label">Cliente</label>
+                <search-box [placeHolder]="'Buscar cliente...'" (onDebounce)="handleSearch($event)"></search-box>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="vendedor" class="form-label">Vendedor</label>
+                <select id="vendedor" class="form-select" required>
+                  <option selected disabled>Seleccione un vendedor...</option>
+                  <option value="1">Vendedor 1</option>
+                  <option value="2">Vendedor 2</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Fechas -->
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="fechaPedido" class="form-label">Fecha de Pedido</label>
+                <input type="date" id="fechaPedido" class="form-control" required />
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="fechaEntrega" class="form-label">Fecha de Entrega</label>
+                <input type="date" id="fechaEntrega" class="form-control" required />
+              </div>
+            </div>
+
+            <!-- Productos -->
+            <h6 class="mt-4">Productos</h6>
+            <div class="row g-3 align-items-end">
+              <div class="col-md-6">
+                <label for="producto" class="form-label">Producto</label>
+                <select id="producto" class="form-select">
+                  <option selected disabled>Seleccione un producto...</option>
+                  <option value="1">Producto A</option>
+                  <option value="2">Producto B</option>
+                </select>
+              </div>
+              <div class="col-md-2">
+                <label for="cantidad" class="form-label">Cantidad</label>
+                <input type="number" id="cantidad" class="form-control" placeholder="1" />
+              </div>
+              <div class="col-md-2">
+                <label for="precio" class="form-label">Precio</label>
+                <input type="text" id="precio" class="form-control" placeholder="$0.00" />
+              </div>
+              <div class="col-md-2">
+                <button class="btn btn-success w-100" type="button" (click)="addProduct()">Agregar</button>
+              </div>
+            </div>
+            <!-- Tabla de Productos -->
+            <table class="table mt-4">
+              <thead class="table-light">
+                <tr>
+                  <th>Producto</th>
+                  <th>Cantidad</th>
+                  <th>Precio</th>
+                  <th>Total</th>
+                  <th>Acciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let product of products">
+                  <td>{{ product.nombre }}</td>
+                  <td>{{ product.cantidad }}</td>
+                  <td>{{ product.precio | currency }}</td>
+                  <td>{{ (product.cantidad * product.precio) | currency }}</td>
+                  <td>
+                    <button class="btn btn-danger btn-sm" (click)="removeProduct(product)">Eliminar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Descuento y Totales -->
+            <div class="row mt-4">
+              <div class="col-md-6">
+                <label for="descuento" class="form-label">Descuento</label>
+                <input type="text" id="descuento" class="form-control" placeholder="10%" />
+              </div>
+              <div class="col-md-6 d-flex justify-content-end align-items-center">
+                <p class="fs-5 me-4">Total: <strong>{{ calculateTotal() | currency }}</strong></p>
+              </div>
+            </div>
+
+            <!-- Botones -->
+            <div class="d-flex justify-content-end mt-4">
+              <button class="btn btn-secondary me-2" type="button" (click)="resetForm()">Cancelar</button>
+              <button class="btn btn-primary" type="submit">Guardar</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

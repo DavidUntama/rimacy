@@ -29,4 +29,6 @@
   .selected {
     background-color: #ccc;
   }
-  
+  i{
+    font-size: smaller;
+  }

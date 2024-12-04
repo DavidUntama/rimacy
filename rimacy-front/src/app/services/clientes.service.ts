@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { map, Observable } from 'rxjs';
 import { Cliente } from '../models/cliente';
 import { Settings } from '../settings';
+import { ClienteDTO } from '../models/clienteDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -26,8 +27,8 @@ export class ClientesService {
     return this.http.get<Cliente>(`${this.url}/${id}`); 
   }
 
-  public getSuggs(s: string): Observable<Cliente[]> {
-    return this.http.get<Cliente[]>(`${this.url}/search/${s}`)
+  public getSuggs(s: string): Observable<ClienteDTO[]> {
+    return this.http.get<ClienteDTO[]>(`${this.url}/search/${s}`)
   }
 
   public save(cliente: Cliente): Observable<Cliente> {
