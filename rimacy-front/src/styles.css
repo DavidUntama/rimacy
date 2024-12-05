@@ -1,4 +1,35 @@
 @import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
+:root {
+    --bg-color: #343a40;
+    --text-color: #212529;
+    --header-footer-bg: #343a40;
+    --header-footer-text: white;
+}
+
 body {
-    background-color: darkolivegreen;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
+}
+
+#header, #footer {
+    background-color: var(--header-footer-bg);
+    color: var(--header-footer-text);
+    padding: 1rem 0;
+}
+
+#main-content {
+    background-color: #ffffff;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }

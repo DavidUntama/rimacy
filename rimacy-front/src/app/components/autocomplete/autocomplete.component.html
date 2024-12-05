@@ -1,0 +1,30 @@
+<div class="autocomplete">
+  <input
+    type="text"
+    class="form-control"
+    [(ngModel)]="searchTerm"
+    (input)="onSearchTermChange()"
+    (focus)="onFocus()"
+    (blur)="onBlur()"
+    (keyup)="onKeyPress($event)"
+    [placeholder]="placeHolder"
+    #txt
+    id="txt"
+    autocomplete="off"
+  />
+
+  @if (showList) {
+  <ul class="list-group">
+    @for (item of filteredItems; track $index) {
+    <li
+      class="list-group-item"
+      (mousedown)="searchTerm = item.nombre; selectedIndex = $index"
+      [class.selected]="$index == selectedIndex"
+      #itemElement
+    >
+      {{ item.nombre }}
+    </li>
+    }
+  </ul>
+  }
+</div>

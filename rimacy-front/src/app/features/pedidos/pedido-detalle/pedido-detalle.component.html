@@ -1,0 +1,61 @@
+<div class="col-md-12 mb-4">
+    <div class="card border-success">
+      <div class="card-header bg-success text-white">
+        <h5>Agregar Productos al Pedido</h5>
+      </div>
+      <div class="card-body">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label for="producto" class="form-label">Producto</label>
+            <select id="producto" class="form-select">
+              <option selected disabled>Seleccione un producto...</option>
+              <option value="1">Producto A</option>
+              <option value="2">Producto B</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label for="cantidad" class="form-label">Cantidad</label>
+            <input type="number" id="cantidad" class="form-control" placeholder="1" />
+          </div>
+          <div class="col-md-2">
+            <label for="unidad" class="form-label">Unidad</label>
+            <select id="unidad" class="form-select">
+              <option value="unidad">Unidad</option>
+              <option value="mediaCaja">Media Caja</option>
+              <option value="caja">Caja</option>
+            </select>
+          </div>
+          <div class="col-md-2">
+            <label for="precio" class="form-label">Precio</label>
+            <input type="text" id="precio" class="form-control" placeholder="S/. 0.00" />
+          </div>
+          <div class="col-md-2">
+            <button class="btn btn-success w-100" type="button">Agregar</button>
+          </div>
+        </div>
+        <!-- Tabla de Productos -->
+        <table class="table table-striped mt-4">
+          <thead class="table-light">
+            <tr>
+              <th>Producto</th>
+              <th>Cantidad</th>
+              <th>Unidad</th>
+              <th>Precio</th>
+              <th>Acciones</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Licor Uva</td>
+              <td>10</td>
+              <td>Caja</td>
+              <td>{{ 20 | penCurrency }}</td>
+              <td>
+                <button class="btn btn-danger btn-sm">Eliminar</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
