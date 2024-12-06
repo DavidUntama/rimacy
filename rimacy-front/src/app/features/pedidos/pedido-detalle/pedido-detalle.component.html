@@ -7,11 +7,7 @@
         <div class="row g-3 align-items-end">
           <div class="col-md-4">
             <label for="producto" class="form-label">Producto</label>
-            <select id="producto" class="form-select">
-              <option selected disabled>Seleccione un producto...</option>
-              <option value="1">Producto A</option>
-              <option value="2">Producto B</option>
-            </select>
+            <autocomplete [items]="items"/>
           </div>
           <div class="col-md-2">
             <label for="cantidad" class="form-label">Cantidad</label>
