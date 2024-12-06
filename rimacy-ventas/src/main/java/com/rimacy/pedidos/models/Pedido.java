@@ -17,15 +17,23 @@ public class Pedido {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(length = 10)
+    private String nroGuia;
+
     @ManyToOne
-    @JoinColumn(name = "id_cliente")
+    @JoinColumn(name = "id_cliente", insertable = false, updatable = false)
     @JsonBackReference
     private Cliente cliente;
 
-    ///@JsonBackReference
     @ManyToOne
-    @JoinColumn(name = "id_colaborador")
+    @JoinColumn(name = "id_colaborador", insertable = false, updatable = false)
+    @JsonBackReference
     private Colaborador colaborador;
+
+    @Column(name = "id_cliente")
+    private Long idCliente;
+    @Column(name = "id_colaborador")
+    private Long idColaborador;
 
     private LocalDateTime fecha_ped;
     private LocalDateTime fecha_ent;

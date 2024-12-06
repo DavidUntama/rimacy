@@ -59,7 +59,7 @@ export class AutocompleteComponent implements OnInit {
   public onKeyPress(event: KeyboardEvent): void {
     const key = event.key;
     const ignoredKeys = ['Control', 'Alt', 'Shift', 'CapsLock', 'Tab', 'Meta'];
-    const funtionalKeys = ['ArrowDown', 'ArrowUp', 'Enter'];
+    const funtionalKeys = ['ArrowDown', 'ArrowUp', 'Enter', 'Escape'];
 
     if (
       ignoredKeys.includes(key) ||
@@ -80,7 +80,7 @@ export class AutocompleteComponent implements OnInit {
         this.updateInputWithSelected();
         this.scrollToView();
       }
-    } else if (event.key === 'Enter') {
+    } else if (event.key === 'Enter' || event.key === 'Escape') {
       this.updateInputWithSelected();
       this.emitir();
       this.filteredItems = [];

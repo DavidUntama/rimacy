@@ -1,6 +1,7 @@
 package com.rimacy.pedidos.controller;
 
 import com.rimacy.pedidos.models.Pedido;
+import com.rimacy.pedidos.models.PedidoDTO;
 import com.rimacy.pedidos.services.PedidoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -25,9 +26,13 @@ public class PedidoController {
     public Pedido getPedidoById(@PathVariable long id){
         return pedidoService.getPedidoById(id);
     }
-    @PostMapping
-    public Pedido savePedido(@RequestBody Pedido pedido){
+    //@PostMapping
+    /*public Pedido savePedido(@RequestBody Pedido pedido){
         return pedidoService.savePedido(pedido);
+    }*/
+    @PostMapping
+    public Pedido crearPedido(@RequestBody PedidoDTO pedidoDTO) {
+        return pedidoService.crearPedido(pedidoDTO);
     }
     @DeleteMapping("/{id}")
     public int delPedidoById(@PathVariable long id){

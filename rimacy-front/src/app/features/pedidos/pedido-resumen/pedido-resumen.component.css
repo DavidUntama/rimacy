@@ -1,0 +1,10 @@
+/* Estilos personalizados para el componente de resumen */
+.card-header {
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  h6 span {
+    font-weight: bold;
+  }
+  

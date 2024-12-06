@@ -1,48 +1,71 @@
 <div class="col-md-12 mb-4">
-    <div class="card border-primary">
-      <div class="card-header bg-primary text-white">
-        <h5>Datos del Pedido</h5>
-      </div>
-      <div class="card-body">
-        <form>
-          <div class="row mb-3">
-            <!-- Número de Guía -->
-            <div class="col-md-6 mb-3">
-              <label for="numeroGuia" class="form-label">Número de Guía</label>
-              <input 
-                type="text" 
-                id="numeroGuia" 
-                class="form-control" 
-                placeholder="Ingrese el número de guía"                 
-                required
-              />
-              <small class="text-danger">
-                Advertencia: Este número de guía ya está registrado.
-              </small>
-            </div>
-            <!-- Cliente -->
-            <div class="col-md-6 mb-3">
-              <label for="cliente" class="form-label">Cliente</label>
-              <search-box [placeHolder]="'Buscar cliente...'" (onDebounce)="handleSearch($event)"></search-box>
-            </div>
+  <div class="card border-primary">
+    <div class="card-header bg-primary text-white">
+      <h5>Datos del Pedido</h5>
+    </div>
+    <div class="card-body">
+      <form [formGroup]="frm">
+        <div class="row mb-3">
+          <!-- Número de Guía -->
+          <div class="col-md-6 mb-3">
+            <label for="numeroGuia" class="form-label">Número de Guía</label>
+            <input
+              type="text"
+              class="form-control"
+              placeholder="Ingrese el número de guía"
+              required
+              autoComplete="off"
+              formControlName="nroGuia"
+            />
+            <small class="text-danger">
+              Advertencia: Este número de guía ya está registrado.
+            </small>
           </div>
-          <div class="row mb-3">
-            <!-- Vendedor -->
-            <div class="col-md-6">
-              <label for="vendedor" class="form-label">Vendedor</label>
-              <autocomplete [placeHolder]="'Ingrese vendedor'" [items]="items" (itemSelectedId)="onItemSelected($event)" required/>              
-            </div>
-            <!-- Fechas -->
-            <div class="col-md-3">
-              <label for="fechaPedido" class="form-label">Fecha de Pedido</label>
-              <input type="date" id="fechaPedido" class="form-control" required />
-            </div>
-            <div class="col-md-3">
-              <label for="fechaEntrega" class="form-label">Fecha de Entrega</label>
-              <input type="date" id="fechaEntrega" class="form-control" required />
-            </div>
+          <!-- Cliente -->
+          <div class="col-md-6 mb-3">
+            <label for="cliente" class="form-label">Cliente</label>
+            <search-box
+              [placeHolder]="'Buscar cliente...'"
+              (onDebounce)="onCienteSelected($event)"
+            ></search-box>
           </div>
-        </form>
-      </div>
+        </div>
+        <div class="row mb-3">
+          <!-- Vendedor -->
+          <div class="col-md-6">
+            <label for="vendedor" class="form-label">Vendedor</label>
+            <autocomplete
+              [placeHolder]="'Ingrese vendedor'"
+              [items]="items"
+              (itemSelectedId)="onVendedorSelected($event)"
+              required
+            />
+          </div>
+          <!-- Fechas -->
+          <div class="col-md-3">
+            <label for="fechaPedido" class="form-label">Fecha de Pedido</label>
+            <input
+              type="date"
+              id="fechaPedido"
+              class="form-control"
+              required
+              formControlName="fechaPed"
+            />
+          </div>
+          <div class="col-md-3">
+            <label for="fechaEntrega" class="form-label"
+              >Fecha de Entrega</label
+            >
+            <input
+              type="date"
+              id="fechaEntrega"
+              class="form-control"
+              required
+              formControlName="fechaEnt"
+            />
+          </div>
+        </div>
+      </form>
     </div>
   </div>
+</div>

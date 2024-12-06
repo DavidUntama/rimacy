@@ -1,12 +1,82 @@
 <div class="container mt-4">
-  <div class="row">
-    <!-- Datos del Pedido -->
-    <pedido-datos/>
+  <!-- Navegación entre pestañas -->
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item">
+      <a class="nav-link active" id="nuevo-pedido-tab" data-bs-toggle="tab" href="#nuevo-pedido" role="tab" >Nuevo Pedido</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" id="buscar-pedido-tab" data-bs-toggle="tab" href="#buscar-pedido" role="tab" >Modificar Pedido</a>
+    </li>
+  </ul>
 
-    <!-- detalle del Pedido -->
-    <pedido-detalle/>
+  <div class="tab-content" id="myTabContent">
+    <!-- Pestaña de Nuevo Pedido -->
+    <div class="tab-pane fade show active" id="nuevo-pedido" role="tabpanel" aria-labelledby="nuevo-pedido-tab">
+      <div class="row">
+        <!-- Datos del Pedido -->
+        <pedido-datos></pedido-datos>
+        <strong> {{ pedidoForm.value | json }} </strong>
 
-    <!-- Resumen y Acciones -->
-    <pedido-resumen/>
+        <!-- Detalle del Pedido -->
+        <pedido-detalle></pedido-detalle>
+
+        <!-- Resumen y Acciones -->
+        <pedido-resumen></pedido-resumen>
+      </div>
+    </div>
+
+    <!-- Pestaña de Buscar Pedido -->
+    <div class="tab-pane fade" id="buscar-pedido" role="tabpanel" aria-labelledby="buscar-pedido-tab">
+      <div class="card">
+        <div class="card-header bg-primary text-white">
+          <h5>Buscar Pedido</h5>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <input type="text" class="form-control" placeholder="Número de guía" />
+            </div>
+            <div class="col-md-4">
+              <button class="btn btn-primary w-100">Buscar</button>
+            </div>
+          </div>
+          <!-- Tabla de resultados -->
+          <table class="table mt-4">
+            <thead class="table-light">
+              <tr>
+                <th>N° Guía</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Importe</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>12345</td>
+                <td>Cliente A</td>
+                <td>2024-12-01</td>
+                <td>$100.00</td>
+                <td>
+                  <button class="btn btn-warning btn-sm">Editar</button>
+                  <button class="btn btn-danger btn-sm">Eliminar</button>
+                </td>
+              </tr>
+              <tr>
+                <td>12346</td>
+                <td>Cliente B</td>
+                <td>2024-12-02</td>
+                <td>$150.00</td>
+                <td>
+                  <button class="btn btn-warning btn-sm">Editar</button>
+                  <button class="btn btn-danger btn-sm">Eliminar</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
+
